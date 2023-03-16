@@ -491,10 +491,13 @@ class Parser:
         ref = None
         if self.ctx.ref:
             # Search the upward in the current context's scope for the given name.
-            for scope in [self.ctx.ref.name] + [r.name for r in self.ctx.ref.scopes]:
-                ref = self.refs.get(scope + '.' + name)
-                if ref:
-                    break
+            try:
+                for scope in [self.ctx.ref.name] + [r.name for r in self.ctx.ref.scopes]:
+                    ref = self.refs.get(scope + '.' + name)
+                    if ref:
+                        break
+            except Exception:
+                pass
         if not ref:
             # Qualifying the name with the current context's scope was a bust, so now
             # look for it in the global space.
