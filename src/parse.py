@@ -282,6 +282,8 @@ class Parser:
             if line is None:
                 break
             self.ctx.update(line=n)
+            if re.search(r'.*\\$', line):
+                break
             if re.search(r'^(---[^-]|---+$)', line) and not ref:
                 # Starting a content block for something to be included in the docs.  Create
                 # a new Reference, against which we will accumulate all comments and other
